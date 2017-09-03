@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "dcp.json",
+  "title": "DCP",
+  "description": "A DCP message response.",
+  "type": "object",
+  "definitions": {
+    "criteria_options": {
+      "$ref": "types.json#/definitions/idCriteriaOptions"
+    },
+    "response_data": {
+      "type": "array",
+      "description": "An array of response message objects",
+      "items": {
+        "$ref": "types.json#/definitions/dcpMsgBuffer"
+      }
+    }
+  },
+  "properties": {
+    "criteria_options": {"$ref": "#/definitions/criteria_options"},
+    "response_data": {"$ref": "#/definitions/response_data"}
+  },
+  "required": [
+    "criteria_options",
+    "response_data"
+  ],
+  "additionalProperties": false,
+  "links": [
+    {
+      "title": "Request extended",
+      "description": "Find data by sending an IdCriteria message to establish the search criteria, followed by an IdDcpBlockExt message to request multiple DCP messages matching the criteria.",
+      "rel": "instances",
+      "href": "dds/dcp-block-ext",
+      "method": "GET",
+      "schema": {
+        "allOf": [
+          {"$ref": "types.json#/definitions/idCriteriaOptions"},
+          {"$ref": "types.json#/definitions/dcpQueryParameters"}
+        ]
+      },
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "criteria_options": {"$ref": "#/definitions/criteria_options"},
+          "response_data": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {"$ref": "types.json#/definitions/extMultDcpMsgFields"},
+                {"$ref": "types.json#/definitions/dcpMsgBuffer"}
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "types.json",
+  "hidden": true,
+  "definitions": {
+    "compactParameter": {
+      "type": "boolean",
+      "description": "Return compact results in accordance with the Dendra datapoint schema (see: https://dendrascience.github.io/dendra-json-schema/#datapoint-list-datapoints)",
+      "default": false,
+      "example": false
+    },
+    "datapointPaginationMeta": {
+      "type": "object",
+      "properties": {
+        "limit" : {"$ref": "#/definitions/paginationLimit"}
+      }
+    },
+    "dcpMsgBodyBuffer": {
+      "type": "object",
+      "example": {
+        "type": "Buffer",
+        "data": [
+          32,
+          66,
+          102
+        ]
+      }
+    },
+    "dcpMsgBodyHex": {
+      "type": "string",
+      "example": "2042665c405270464b40464c7947737142577b44574b44764044787f444d5d46404045635a45427544746e44725f4e5659447d5e447776447372447177464245464153445455447d69447e6044545443406242665c40517e464967464b6646717f444e65445063447953447370444d5e46404045635a45466a44775d44755a4e5463447c7b447763447372447178464245464153445455447d55447e6044545443406242665c405174464c75464e67465c7c426f4b474f7b44777044764a444d5d46404045635a4544484477724475624e5666447c5944774d44736d447174464245464153445456447c69447e6044545443406242665c40516a464c6b464e7f475c4c42576d445258447466447c4c444d5e46404045635a447e7a4474734472634e565d447b7a447676447369447171464244464153445456447c70447e6044545443406242665c405160464765464966444d7e425763445c54447341454170444d5e46404045635a447e6e4472404470554e506e447b5a44766344736b447174464244464153445455447d7b447e6044545443406242665c405156464c47464e4647636942585c44584644766a447a60444d5e46404045635a45444244755644727e4e5771447a7744765144736d447176464244464153445455447e58447e6044545443406220"
+    },
+    "dcpMsgBuffer": {
+      "type": "object",
+      "description": "The DCP message header and body as an array of bytes",
+      "properties": {
+        "header": {"$ref": "#/definitions/domsatHeader"},
+        "body": {"$ref": "#/definitions/dcpMsgBodyBuffer"}
+      }
+    },
+    "dcpMsgHex": {
+      "type": "object",
+      "description": "The DCP message header and body encoded as hex",
+      "properties": {
+        "header": {"$ref": "#/definitions/domsatHeader"},
+        "body": {"$ref": "#/definitions/dcpMsgBodyHex"}
+      }
+    },
+    "dcpQueryParameters": {
+      "type": "object",
+      "properties": {
+        "time[$op]": {
+          "$ref": "types.json#/definitions/isoDate",
+          "description": "Retrieve on time using query operators: $lt, $lte, $gt, $gte",
+          "example": "2017-05-11T00:00:00Z"
+        }
+      }
+    },
+    "decodedRow": {
+      "description": "A decoded row object",
+      "example": {
+        "day": 246,
+        "time": 1200,
+        "c_3": 0.704,
+        "c_4": 0.825,
+        "c_5": 7.409,
+        "c_6": 153.1,
+        "c_7": 14.83,
+        "c_8": 34.56,
+        "c_9": 36.47,
+        "c_10": 8.61,
+        "c_11": 0,
+        "c_12": 63.62,
+        "c_13": 42.77,
+        "c_14": 33.74,
+        "c_15": 32.31,
+        "c_16": -1.433,
+        "c_17": 39.34,
+        "c_18": 35.74,
+        "c_19": 33.14,
+        "c_20": 31.91,
+        "c_21": 0.133,
+        "c_22": 0.083,
+        "c_23": 13.01,
+        "c_24": 39.45,
+        "c_25": 40,
+        "c_26": 13,
+        "c_27": 413
+      }
+    },
+    "domsatHeader": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "example": "BEC02B62"
+        },
+        "timeString": {
+          "example": "17246201736"
+        },
+        "timeDate": {
+          "example": "2017-09-03T20:17:36.000Z"
+        },
+        "typeCode": {
+          "example": "G"
+        },
+        "signalStrength": {
+          "example": 49
+        },
+        "frequencyOffset": {
+          "example": "+0"
+        },
+        "modulationIndex": {
+          "example": "N"
+        },
+        "dataQualityIndicator": {
+          "example": "N"
+        },
+        "channelNumber": {
+          "example": 192
+        },
+        "spacecraftIndicator": {
+          "example": "W"
+        },
+        "uplinkCarrierStatus": {
+          "example": "UP"
+        },
+        "length": {
+          "example": 488
+        }
+      }
+    },
+    "extMultDcpMsgFields": {
+      "type": "object",
+      "properties": {
+        "platformId": {
+          "example": "BEC02B62"
+        },
+        "domsatSeq": {
+          "example": 76542
+        },
+        "domsatTimeString": {
+          "example": "1970/001 00:00:00.000"
+        },
+        "carrierStartString": {
+          "example": "2017/246 14:17:35.925"
+        },
+        "carrierStopString": {
+          "example": "2017/246 14:17:39.479"
+        },
+        "baud": {
+          "example": 1200
+        }
+      }
+    },
+    "idCriteriaOptions": {
+      "type": "object",
+      "description": "The search criteria sent for finding messages",
+      "properties": {
+        "dcp_address": {
+          "type": "string",
+          "description": "Retrieve messages with the specified DCP address",
+          "example": "BEC02B62"
+        },
+        "drs_since": {
+          "type": "string",
+          "description": "Retrieve messages that were received after the specified time (e.g. '2017/246 00:00:00', '2017-09-03T00:00:00Z')",
+          "example": "2017/246 00:00:00"
+        },
+        "drs_until": {
+          "type": "string",
+          "description": "Retrieve messages that were received before the specified time (e.g. '2017/247 00:00:00', '2017-09-04T00:00:00Z', 'now')",
+          "example": "2017/247 00:00:00"
+        },
+        "search_keyword": {"$ref": "#/definitions/searchKeyword"}
+      }
+    },
+    "isoDate": {
+      "type": "string",
+      "example": "2017-05-28T09:50:23.106Z",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[T][0-9]{2}:[0-9]{2}:[0-9]{2}|.|[0-9]{0,3}Z$"
+    },
+    "messageQueryParameters": {
+      "type": "object",
+      "properties": {
+        "compact": {"$ref": "#/definitions/compactParameter"},
+        "body_encoding": {
+          "enum": ["ascii", "hex", "utf8"],
+          "description": "Outputs the binary body to the specified encoding (or outputs to an array of bytes if not specified)",
+          "example": "hex"
+        },
+        "decode_columns": {
+          "type": "string",
+          "description": "Outputs the decoded body as an object with the given positional column names (or outputs to an array of column values if not specified)",
+          "example": "day,time"
+        },
+        "decode_format": {
+          "type": "string",
+          "description": "Decode body using the given Pseduo Binary Decoder format string (see: https://github.com/DendraScience/goes-pseudo-binary)",
+          "example": "fp2_7,fp2_20"
+        },
+        "decode_slice": {
+          "type": "string",
+          "description": "Performs a Buffer.slice(start, [end]) before decoding the binary body (see: https://nodejs.org/api/buffer.html#buffer_buf_slice_start_end)",
+          "example": "1,487"
+        },
+        "time[$op]": {
+          "$ref": "types.json#/definitions/isoDate",
+          "description": "Filter on time using query operators: $lt, $lte, $gt, $gte",
+          "example": "2017-05-11T00:00:00Z"
+        },
+        "$limit": {"$ref": "#/definitions/queryLimit"},
+        "$sort[time]": {
+          "$ref": "#/definitions/querySort",
+          "description": "Specify the sort order",
+          "default": -1
+        }
+      }
+    },
+    "paginationLimit" : {
+      "type": "integer",
+      "description": "Maximum number of items per page",
+      "example": 10
+    },
+    "queryLimit" : {
+      "type": "integer",
+      "description": "Specify the maximum number of items to return",
+      "example": 10,
+      "default": 20,
+      "maximum": 2000
+    },
+    "querySort" : {
+      "enum": [-1, 1],
+      "description": "Specify the fields to sort by and the respective sort order",
+      "example": 1
+    },
+    "searchKeyword" : {
+      "description": "An additional search criterion to be passed in the search criteria file",
+      "example": "search_value"
+    },
+    "seriesQueryParameters": {
+      "type": "object",
+      "properties": {
+        "time_edit": {
+          "type": "string",
+          "description": "Manipulate the message header's date in order to compute a base time for rows: StartOf (so), EndOf (eo), Add (ad), Subtract (su)",
+          "example": "so_h,su_8_h"
+        },
+        "time_interval": {
+          "type": "number",
+          "description": "The number of seconds to increment the row's time in order to obtain the next row's time",
+          "example": 600
+        }
+      }
+    },
+    "seriesTime": {
+      "type": "object",
+      "description": "The row's time information in UTC",
+      "properties": {
+        "date": {
+          "$ref": "types.json#/definitions/isoDate",
+          "example": "2017-09-03T12:00:00.000Z"
+        },
+        "offset": {
+          "$ref": "types.json#/definitions/utcOffset",
+          "example": 0
+        }
+      }
+    },
+    "utcOffset": {
+      "type": "integer",
+      "description": "An offset in seconds between the time zone and UTC",
+      "example": -28800
+    }
+  }
+}

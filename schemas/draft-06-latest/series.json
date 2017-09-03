@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "series.json",
+  "title": "Series",
+  "description": "An individual time series row decoded from a DCP message.",
+  "type": "object",
+  "definitions": {
+    "data": {
+      "$ref": "types.json#/definitions/decodedRow"
+    },
+    "time": {
+      "$ref": "types.json#/definitions/seriesTime"
+    }
+  },
+  "properties": {
+    "data": {"$ref": "#/definitions/data"},
+    "time": {"$ref": "#/definitions/time"}
+  },
+  "required": [
+    "data",
+    "time"
+  ],
+  "additionalProperties": false,
+  "links": [
+    {
+      "title": "List series",
+      "description": "Find one or more time series rows based on the query parameters.",
+      "rel": "instances",
+      "href": "series",
+      "method": "GET",
+      "schema": {
+        "allOf": [
+          {"$ref": "types.json#/definitions/idCriteriaOptions"},
+          {"$ref": "types.json#/definitions/messageQueryParameters"},
+          {"$ref": "types.json#/definitions/seriesQueryParameters"}
+        ]
+      },
+      "targetSchema": {
+        "allOf": [
+          {"$ref": "types.json#/definitions/datapointPaginationMeta"},
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {"rel": "self"}
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

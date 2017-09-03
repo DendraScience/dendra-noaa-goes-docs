@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "message.json",
+  "title": "Message",
+  "description": "An individual DCP message.",
+  "type": "object",
+  "definitions": {
+    "message": {
+      "$ref": "types.json#/definitions/dcpMsgHex"
+    },
+    "decoded": {
+      "type": "array",
+      "description": "The DCP message body decoded to rows and columns",
+      "items": {
+        "$ref": "types.json#/definitions/decodedRow"
+      }
+    }
+  },
+  "properties": {
+    "message": {"$ref": "#/definitions/message"},
+    "decoded": {"$ref": "#/definitions/decoded"}
+  },
+  "required": [
+    "message"
+  ],
+  "additionalProperties": false,
+  "links": [
+    {
+      "title": "List messages",
+      "description": "Find one or more DCP messages based on the query parameters.",
+      "rel": "instances",
+      "href": "messages",
+      "method": "GET",
+      "schema": {
+        "allOf": [
+          {"$ref": "types.json#/definitions/idCriteriaOptions"},
+          {"$ref": "types.json#/definitions/messageQueryParameters"}
+        ]
+      },
+      "targetSchema": {
+        "allOf": [
+          {"$ref": "types.json#/definitions/datapointPaginationMeta"},
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {"rel": "self"}
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
